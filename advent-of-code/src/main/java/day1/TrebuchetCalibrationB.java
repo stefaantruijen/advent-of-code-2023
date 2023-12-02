@@ -1,12 +1,12 @@
-package com.myorg;
+package day1;
 
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class TrebuchetCalibrationA {
+public class TrebuchetCalibrationB {
     public static void main(final String[] args) throws Exception {
         long sumOfAllCalibrationValues = 0L;
-        final TrebuchetCalibrationLineDeciphererB decipherer = new TrebuchetCalibrationLineDeciphererB();
+        final TrebuchetCalibrationLineDecipherer decipherer = new TrebuchetCalibrationLineDecipherer();
 
         try (final InputStream inputFile = TrebuchetCalibrationB.class.getClassLoader().getResourceAsStream("day-1-input.txt")) {
             try (final Scanner scanner = new Scanner(inputFile)) {

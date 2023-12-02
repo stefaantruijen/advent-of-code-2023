@@ -1,4 +1,4 @@
-package com.myorg;
+package day1;
 
 public class TrebuchetCalibrationLineDecipherer {
 

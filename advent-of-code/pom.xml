@@ -41,7 +41,7 @@
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 							<mainClass>
-								com.myorg.TrebuchetCalibrationA</mainClass>
+								day1.TrebuchetCalibrationA</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

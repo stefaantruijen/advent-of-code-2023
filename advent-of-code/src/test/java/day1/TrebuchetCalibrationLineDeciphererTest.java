@@ -1,11 +1,11 @@
-package com.myorg;
+package day1;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import com.myorg.TrebuchetCalibrationLineDecipherer;
-import com.myorg.TrebuchetCalibrationLineDeciphererB;
+import day1.TrebuchetCalibrationLineDecipherer;
+import day1.TrebuchetCalibrationLineDeciphererB;
 
 public class TrebuchetCalibrationLineDeciphererTest {
 
