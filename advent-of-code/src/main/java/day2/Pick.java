@@ -47,4 +47,9 @@ public class Pick {
         return noBlue == other.noBlue && noGreen == other.noGreen && noRed == other.noRed;
     }
 
+    @Override
+    public String toString() {
+        return "Pick [noRed=" + noRed + ", noGreen=" + noGreen + ", noBlue=" + noBlue + "]";
+    }
+
 }

@@ -27,4 +27,21 @@ public class ParsedGameResult {
         return picks;
     }
 
+    public int getPower() {
+        int neededRed = 0;
+        int neededGreen = 0;
+        int neededBlue = 0;
+        for (final Pick pick : picks) {
+            neededRed = Math.max(pick.getNoRed(), neededRed);
+            neededGreen = Math.max(pick.getNoGreen(), neededGreen);
+            neededBlue = Math.max(pick.getNoBlue(), neededBlue);
+        }
+
+        final int factorForPowerRed = Math.max(neededRed, 1);
+        final int factorForPowerGreen = Math.max(neededGreen, 1);
+        final int factorForPowerBlue = Math.max(neededBlue, 1);
+
+        return factorForPowerRed * factorForPowerGreen * factorForPowerBlue;
+    }
+
 }

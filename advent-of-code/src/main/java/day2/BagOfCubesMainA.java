@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import day1.TrebuchetCalibrationB;
 
-public class BagOfCubesMain {
+public class BagOfCubesMainA {
 
     public static void main(final String[] args) throws IOException {
         int numberOfPossibleGames = 0;
