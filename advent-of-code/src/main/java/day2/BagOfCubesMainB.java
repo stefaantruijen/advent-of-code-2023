@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
-import day1.TrebuchetCalibrationB;
-
 public class BagOfCubesMainB {
 
     public static void main(final String[] args) throws IOException {
@@ -16,7 +14,7 @@ public class BagOfCubesMainB {
         final int totalNoBlueInBag = 14;
         final GameParser gameParser = new GameParser(totalNoRedInBag, totalNoGreenInBag, totalNoBlueInBag);
 
-        try (final InputStream inputFile = TrebuchetCalibrationB.class.getClassLoader().getResourceAsStream("day-2-input.txt")) {
+        try (final InputStream inputFile = BagOfCubesMainB.class.getClassLoader().getResourceAsStream("day-2-input.txt")) {
             try (final Scanner scanner = new Scanner(inputFile)) {
                 while (scanner.hasNextLine()) {
                     final String pick = scanner.nextLine();
