@@ -21,7 +21,6 @@ public class GondolaSchematic {
         for (final List<SchematicCell> line : gondolaSchematic) {
             for (final SchematicCell currentSchematicCell : line) {
                 if (currentSchematicCell.isSymbol()) {
-//                    System.out.println("Found cell that is a symbol");
                     // orthogonally
                     final SchematicCell topNeighbor = currentSchematicCell.getTopNeighbor();
                     final SchematicCell bottomNeighbor = currentSchematicCell.getBottomNeighbor();
@@ -42,10 +41,8 @@ public class GondolaSchematic {
                     }
 
                     for (final SchematicCell neighborCell : neighboringCells) {
-//                        System.out.println("Processing neighbor cell " + neighborCell);
                         if (neighborCell != null && neighborCell.isDigit()) {
                             final int numberOfAdjacentCells = neighborCell.getNumberOfAdjacentCells();
-//                            System.out.println("Adding number to list: " + numberOfAdjacentCells);
                             partNumbers.add(numberOfAdjacentCells);
                         }
                     }
@@ -53,6 +50,18 @@ public class GondolaSchematic {
             }
         }
         return partNumbers;
+    }
+
+    public List<Integer> getGearRatios() {
+        final List<Integer> gearRatios = new ArrayList<>();
+        for (final List<SchematicCell> line : gondolaSchematic) {
+            for (final SchematicCell currentSchematicCell : line) {
+                if (currentSchematicCell.getGearRatio() != 0) {
+                    gearRatios.add(currentSchematicCell.getGearRatio());
+                }
+            }
+        }
+        return gearRatios;
     }
 
 }
