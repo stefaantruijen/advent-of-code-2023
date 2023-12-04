@@ -82,31 +82,6 @@ public class SchematicCell {
         return Integer.parseInt(sb.toString());
     }
 
-    public int getGearRatio() {
-        if (!isGear()) {
-            return 1;
-        }
-        final List<SchematicCell> gearRatioCells = new ArrayList<>(List.of(this.topNeighbor, this.bottomNeighbor).stream()
-                .filter(neighbor -> neighbor != null)
-                .flatMap(topOrBottomNeighbor -> Arrays.asList(topOrBottomNeighbor, topOrBottomNeighbor.getLeftNeighbor(),
-                        topOrBottomNeighbor.getRightNeighbor()).stream())
-                .filter(neighbor -> neighbor != null)
-                .toList());
-
-        if (leftNeighbor != null) {
-            gearRatioCells.add(this.leftNeighbor);
-        }
-        if (rightNeighbor != null) {
-            gearRatioCells.add(this.rightNeighbor);
-        }
-        final Integer gearRatio = gearRatioCells
-            .stream()
-            .filter(SchematicCell::isDigit)
-            .map(SchematicCell::getNumberOfAdjacentCells)
-            .reduce(1, (a, b) -> a * b);
-        return gearRatio;
-    }
-
     boolean isGear() {
         return isSymbol() && getContent() == '*' && hasExactlyTwoNeighboringNumbers();
     }
