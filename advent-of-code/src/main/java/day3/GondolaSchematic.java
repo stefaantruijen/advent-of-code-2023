@@ -56,8 +56,41 @@ public class GondolaSchematic {
         final List<Integer> gearRatios = new ArrayList<>();
         for (final List<SchematicCell> line : gondolaSchematic) {
             for (final SchematicCell currentSchematicCell : line) {
-                if (currentSchematicCell.getGearRatio() != 0) {
-                    gearRatios.add(currentSchematicCell.getGearRatio());
+                if (currentSchematicCell.isGear()) {
+                    final List<SchematicCell> gearRatioCells = new ArrayList<>();
+                    if(currentSchematicCell.getLeftNeighbor().isDigit()) {
+                        gearRatioCells.add(currentSchematicCell.getLeftNeighbor());
+                    }
+                    if(currentSchematicCell.getRightNeighbor().isDigit()) {
+                        gearRatioCells.add(currentSchematicCell.getRightNeighbor());
+                    }
+                    if (currentSchematicCell.getTopNeighbor().isDigit()) {
+                        gearRatioCells.add(currentSchematicCell.getTopNeighbor());
+                    }
+                    if (currentSchematicCell.getBottomNeighbor().isDigit()) {
+                        gearRatioCells.add(currentSchematicCell.getBottomNeighbor());
+                    }
+                    if (currentSchematicCell.getTopNeighbor().getLeftNeighbor().isDigit()) {
+                        gearRatioCells.add(currentSchematicCell.getTopNeighbor().getLeftNeighbor());
+                    }
+                    if (currentSchematicCell.getTopNeighbor().getRightNeighbor().isDigit()) {
+                        gearRatioCells.add(currentSchematicCell.getTopNeighbor().getRightNeighbor());
+                    }
+                    if (currentSchematicCell.getBottomNeighbor().getLeftNeighbor().isDigit()) {
+                        gearRatioCells.add(currentSchematicCell.getBottomNeighbor().getLeftNeighbor());
+                    }
+                    if (currentSchematicCell.getBottomNeighbor().getRightNeighbor().isDigit()) {
+                        gearRatioCells.add(currentSchematicCell.getBottomNeighbor().getRightNeighbor());
+                    }
+                    final Integer gearRatio = gearRatioCells
+                            .stream()
+                            .filter(cell -> cell != null)
+                            .filter(SchematicCell::isDigit)
+                            .map(SchematicCell::getNumberOfAdjacentCells)
+                            .filter(number -> number != 0)
+                            .reduce(1, (a, b) -> a * b);
+                    System.out.println("added gear ratio " + gearRatio + " for cell " + currentSchematicCell);
+                    gearRatios.add(gearRatio);
                 }
             }
         }

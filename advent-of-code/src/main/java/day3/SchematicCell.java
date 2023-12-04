@@ -1,5 +1,7 @@
 package day3;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -71,6 +73,7 @@ public class SchematicCell {
         }
         sb.append(this.getContent());
         currentCell = this;
+        this.setCounted(true);
         while (currentCell != null && currentCell.rightNeighborIsDigit()) {
             sb.append(currentCell.getRightNeighbor().getContent());
             currentCell.rightNeighbor.setCounted(true);
@@ -81,12 +84,25 @@ public class SchematicCell {
 
     public int getGearRatio() {
         if (!isGear()) {
-            return 0;
+            return 1;
         }
-        final Integer gearRatio = List.of(this.leftNeighbor, this.rightNeighbor, this.topNeighbor, this.bottomNeighbor)
+        final List<SchematicCell> gearRatioCells = new ArrayList<>(List.of(this.topNeighbor, this.bottomNeighbor).stream()
+                .filter(neighbor -> neighbor != null)
+                .flatMap(topOrBottomNeighbor -> Arrays.asList(topOrBottomNeighbor, topOrBottomNeighbor.getLeftNeighbor(),
+                        topOrBottomNeighbor.getRightNeighbor()).stream())
+                .filter(neighbor -> neighbor != null)
+                .toList());
+
+        if (leftNeighbor != null) {
+            gearRatioCells.add(this.leftNeighbor);
+        }
+        if (rightNeighbor != null) {
+            gearRatioCells.add(this.rightNeighbor);
+        }
+        final Integer gearRatio = gearRatioCells
             .stream()
-            .filter(neighbor -> neighbor != null && neighbor.isDigit())
-            .map(neighbor -> Integer.parseInt("" + neighbor.getContent()))
+            .filter(SchematicCell::isDigit)
+            .map(SchematicCell::getNumberOfAdjacentCells)
             .reduce(1, (a, b) -> a * b);
         return gearRatio;
     }
@@ -96,32 +112,35 @@ public class SchematicCell {
     }
 
     private boolean hasExactlyTwoNeighboringNumbers() {
-
-        if(this.leftNeighborIsDigit()) {
-            // if left is a digit, then
-            // - only right is a digit is correct
-            // - only top is a digit is correct
-            // - only bottom is a digit is correct
-            // if none of the above are true,
-            // - topleft and top and right are correct
-            // ...
-            // we need something that can count how many surrounding numbers there are here
-            if(this.rightNeighborIsDigit() && ! this.topNeighborIsDigit() && ! this.bottomLeftNeighborIsDigit() && ! this.topLeftNeighborIsDigit() && ! this.topRightNeighborIsDigit() && ! this.bottomLeftNeighborIsDigit() && ! this.bottomRightNeighborIsDigit()) {
-                return true;
-            }
-        }
-
         final List<Supplier<Boolean>> potentialNeighbors = List.of(
                 this::leftNeighborIsDigit,
                 this::rightNeighborIsDigit,
                 this::topNeighborIsDigit,
-                this::bottomNeighborIsDigit,
-                this::topLeftNeighborIsDigit,
-                this::topRightNeighborIsDigit,
-                this::bottomLeftNeighborIsDigit,
-                this::bottomRightNeighborIsDigit);
-        final long count = potentialNeighbors.stream().filter(Supplier::get).count();
-
+                this::bottomNeighborIsDigit);
+        long count = potentialNeighbors.stream().filter(Supplier::get).count();
+        if (count > 2) {
+            return false;
+        }
+        if (topLeftNeighborIsDigit()) {
+            if (!topNeighborIsDigit()) {
+                count++;
+            }
+        }
+        if (topRightNeighborIsDigit()) {
+            if (!topNeighborIsDigit()) {
+                count++;
+            }
+        }
+        if (bottomLeftNeighborIsDigit()) {
+            if (!bottomNeighborIsDigit()) {
+                count++;
+            }
+        }
+        if (bottomRightNeighborIsDigit()) {
+            if (!bottomNeighborIsDigit()) {
+                count++;
+            }
+        }
         System.out.println("count = " + count);
         return count == 2;
     }

@@ -32,8 +32,7 @@ public class GondolaSchematicTest {
     @Test
     public void testGearSample() throws Exception {
         final GondolaSchematic gondolaSchematic = buildGondolaSchematic(sampleInput);
-        final List<Integer> gearRatios = gondolaSchematic.getGearRatios();
-        final Integer sumOfGearRatios = gearRatios.stream().reduce(1, (a, b) -> a * b);
+        final Integer sumOfGearRatios = gondolaSchematic.getGearRatios().stream().reduce(0, (a, b) -> a + b);
         assertThat(sumOfGearRatios).isEqualTo(467835);
     }
 

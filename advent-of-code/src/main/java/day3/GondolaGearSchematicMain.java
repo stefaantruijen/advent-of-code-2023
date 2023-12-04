@@ -17,7 +17,7 @@ public class GondolaGearSchematicMain {
                 gondolaSchematic = gsb.build();
             }
         }
-        final Integer sumOfPartNumbers = gondolaSchematic.getPartNumbers().stream().reduce(0, (a, b) -> a + b);
+        final Integer sumOfPartNumbers = gondolaSchematic.getGearRatios().stream().reduce(0, (a, b) -> a + b);
         System.out.println("the sum of all of the gears in the engine schematic  = " + sumOfPartNumbers);
     }
 }
